@@ -11,11 +11,11 @@ class AccessionClass(object):
         self.id = None
         self.name = None
         self.country = None
-        self.sitename = None
-        self.collector = None
-        self.collection_date = None
-        self.longitude = None
-        self.latitude = None
+        self.source = None
+        self.category = None
+        self.status = None
+        self.population = None
+        self.line = None
         self.cs_number = None
         self.species = None
 
@@ -45,30 +45,35 @@ def parseAccessionFile(filename=None, species=1):
         return None
     accession_list = []
     with open(filename,'r') as f:
-        reader = csv.reader(f,delimiter=',')
+        reader = csv.reader(f,delimiter='\t')
         header = reader.next()
-        if header != ['id','name','country','sitename','latitude','longitude','collector','collectiondate','CS_number']:
+        if header != ['name','line','population','country','category','source','status']:
             raise Exception('header must be of form %s' % header)
         for row in reader:
             accession = AccessionClass()
-            accession.id = int(row[0])
-            accession.name = row[1]
-            accession.country = row[2]
-            accession.sitename = row[3]
+            accession.name = row[0]
+            accession.id = int(accession.name.lstrip('HM'))
             try:
-                accession.latitude = float(row[4])
+                accession.line = row[1]
             except:
                 pass
             try:
-                accession.longitude = float(row[5])
+                accession.population = row[2]
             except:
                 pass
-            accession.collector = row[6]
             try:
-                accession.collection_data = datetime.strptime(row[7],'%Y-%m-%d %H:%M:%S')
+                accession.country = row[3]
             except:
                 pass
-            accession.cs_number = row[8]
+            try:
+                accession.category = row[4]
+            except:
+                pass
+            try:
+                accession.source = row[5]
+            except:
+                pass
+            accession.status = row[6]
             accession_list.append(accession)
             accession.species = species
     return accession_list
@@ -80,8 +85,8 @@ def convertAccessionsToJson(accessions,country_map = {}):
         country_map =  {}
     for acc in accessions:
         country = country_map.get(acc.country,acc.country)
-        fields = {'name':acc.name,'country':country,'sitename':acc.sitename,
-        'collector':acc.collector,'collection_date':acc.collection_date,'latitude':acc.latitude,'longitude':acc.longitude,'cs_number':acc.cs_number,'species':acc.species}
+        fields = {'name':acc.name,'country':country,'source':acc.source,
+        'category':acc.category,'status':acc.status,'line':acc.line,'population':acc.population,'species':acc.species}
         acc_dict = {'model':'phenotypedb.Accession','pk':acc.id,'fields':fields}
         accession_dict.append(acc_dict)
     return accession_dict

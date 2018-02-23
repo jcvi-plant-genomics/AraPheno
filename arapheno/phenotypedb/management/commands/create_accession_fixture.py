@@ -21,7 +21,7 @@ class Command(BaseCommand):
         filename = options['filename']
         outputfile = options['outputfile']
         countryfile = options['countryfile']
-        try: 
+        try:
             country_map = {}
             if countryfile:
                 country_map = parse_country_map(countryfile)
