@@ -266,14 +266,13 @@ class Accession(models.Model):
     """
     Accession models
     """
-    name = models.CharField(max_length=255, db_index=True, blank=True, null=True) #accession name if available
-    country = models.CharField(max_length=255, blank=True, null=True) #country of accession if available
-    sitename = models.TextField(blank=True, null=True) #name of site if available
-    collector = models.TextField(blank=True, null=True) #collector if available
-    collection_date = models.DateTimeField(blank=True, null=True) #date of phenotype integration/submission
-    longitude = models.FloatField(null=True, blank=True, db_index=True) #longitude of accession
-    latitude = models.FloatField(null=True, blank=True, db_index=True) #latitude of accession
-    cs_number = models.CharField(max_length=255, blank=True, null=True) # Stock center number
+    name = models.CharField(max_length=255, db_index=True, blank=True, null=True) #accession name
+    line = models.CharField(max_length=255, blank=True, null=True) #line name, if available
+    population = models.CharField(max_length=255, blank=True, null=True) #population of origin, if available
+    country = models.CharField(max_length=255, blank=True, null=True) #country of origin, if available
+    category = models.TextField(blank=True, null=True) #category, if available
+    source = models.TextField(blank=True, null=True) #seed sourced from, if available
+    status = models.CharField(max_length=255, blank=True, null=True) #germplasm processing status
     species = models.ForeignKey("Species") #species foreign key
 
 
@@ -281,13 +280,6 @@ class Accession(models.Model):
     def count_phenotypes(self):
         """Returns number of phenotypes"""
         return self.observationunit_set.values('phenotypevalue__phenotype').distinct().count()
-
-    @property
-    def cs_number_url(self):
-        """Returns the URL to the stock center detail page"""
-        if self.cs_number:
-            return "http://www.arabidopsis.org/servlets/StockSearcher?action=detail&stock_number=%s" % self.cs_number
-        return None
 
     def __unicode__(self):
         return u"%s (Accession)" % (mark_safe(self.name))
