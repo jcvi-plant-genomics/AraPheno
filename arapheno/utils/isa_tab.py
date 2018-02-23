@@ -185,7 +185,7 @@ def save_isatab(isatab):
                 derived_data_file = assay_data.metadata['Derived Data File'][0]
                 trait_def_file = assay_data.metadata['Parameter Value[Trait Definition File]'][0].Trait_Definition_File
                 assay_id = assay_data.metadata['Assay Name'][0].Assay_Name
-                phen_row = {k:float(v) for k,v in s.derived_data_map[derived_data_file][assay_id].iteritems() if v != ''}
+                phen_row = {k:float(v) for k,v in s.derived_data_map[derived_data_file][assay_id].iteritems() if k is not None and v != ''}
                 obs_unit = obs_map[sample_id]
                 for phenotype_id, value in phen_row.iteritems():
                     phenotype = phenotype_map[trait_def_file][phenotype_id]
