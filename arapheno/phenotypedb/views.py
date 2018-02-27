@@ -28,7 +28,7 @@ def list_phenotypes(request):
     """
     Displays table of all published phenotypes
     """
-    table = PhenotypeTable(Phenotype.objects.published(), order_by="-name")
+    table = PhenotypeTable(Phenotype.objects, order_by="-name")
     RequestConfig(request, paginate={"per_page":20}).configure(table)
     return render(request, 'phenotypedb/phenotype_list.html', {"phenotype_table":table})
 
@@ -51,7 +51,7 @@ def list_studies(request):
     """
     Displays table of all published studies
     """
-    table = StudyTable(Study.objects.published(), order_by="-name")
+    table = StudyTable(Study.objects, order_by="-name")
     RequestConfig(request, paginate={"per_page":20}).configure(table)
     return render(request, 'phenotypedb/study_list.html', {"study_table":table})
 
@@ -60,8 +60,8 @@ def detail_study(request, pk=None):
     """
     Detailed view of a single study
     """
-    study = Study.objects.published().get(id=pk)
-    phenotype_table = ReducedPhenotypeTable(Phenotype.objects.published().filter(study__id=pk), order_by="-name")
+    study = Study.objects.get(id=pk)
+    phenotype_table = ReducedPhenotypeTable(Phenotype.objects.filter(study__id=pk), order_by="-name")
     RequestConfig(request, paginate={"per_page":20}).configure(phenotype_table)
     variable_dict = {}
     variable_dict["phenotype_table"] = phenotype_table
@@ -102,12 +102,12 @@ def detail_accession(request, pk=None):
     Detailed view of a single accession
     """
     accession = Accession.objects.get(id=pk)
-    phenotype_table = AccessionPhenotypeTable(pk,Phenotype.objects.published().filter(phenotypevalue__obs_unit__accession_id=pk), order_by="-id")
+    phenotype_table = AccessionPhenotypeTable(pk,Phenotype.objects.filter(phenotypevalue__obs_unit__accession_id=pk), order_by="-id")
     RequestConfig(request, paginate={"per_page":20}).configure(phenotype_table)
     variable_dict = {}
     variable_dict["phenotype_table"] = phenotype_table
     variable_dict["object"] = accession
-    phenotypes = Phenotype.objects.published().filter(phenotypevalue__obs_unit__accession_id=pk)
+    phenotypes = Phenotype.objects.filter(phenotypevalue__obs_unit__accession_id=pk)
     variable_dict['phenotype_count'] = phenotypes.count()
     variable_dict['to_data'] = phenotypes.values('to_term__name').annotate(count=Count('to_term__name'))
     variable_dict['eo_data'] = phenotypes.values('eo_term__name').annotate(count=Count('eo_term__name'))
@@ -149,7 +149,7 @@ def detail_ontology_term(request,pk=None):
         ids = [ ids[i:i+500] for i in range(0, len(ids), 500) ]
         for sub in ids:
             kwargs = {db_field:sub}
-            phenotypes.extend(Phenotype.objects.published().filter(**kwargs))
+            phenotypes.extend(Phenotype.objects.filter(**kwargs))
     variable_dict['phenotype_count'] = len(phenotypes)
     phenotype_table = PhenotypeTable(phenotypes, order_by="-name")
     RequestConfig(request, paginate={"per_page":20}).configure(phenotype_table)

@@ -9,8 +9,8 @@ class GlobalSearchAutocomplete(autocomplete_light.AutocompleteGenericBase):
     """
     Global search autocomplete configuration class
     """
-    choices = (Phenotype.objects.published(),
-               Study.objects.published(),
+    choices = (Phenotype.objects,
+               Study.objects,
                Accession.objects.all(),
                OntologyTerm.objects.all())
     search_fields = (('name', 'to_term__id', 'to_term__name',), #phenotype search field

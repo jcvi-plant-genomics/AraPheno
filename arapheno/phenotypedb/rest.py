@@ -60,13 +60,13 @@ def search(request,query_term=None,format=None):
     """
     if request.method == "GET":
         if query_term==None:
-            studies = Study.objects.published().all()
-            phenotypes = Phenotype.objects.published().all()
+            studies = Study.objects.all()
+            phenotypes = Phenotype.objects.all()
             accessions = Accession.objects.all()
             ontologies = OntologyTerm.objects.all()
         else:
-            studies = Study.objects.published().filter(name__icontains=query_term)
-            phenotypes = Phenotype.objects.published().filter(Q(name__icontains=query_term) |
+            studies = Study.objects.filter(name__icontains=query_term)
+            phenotypes = Phenotype.objects.filter(Q(name__icontains=query_term) |
                                                   Q(to_term__id__icontains=query_term) |
                                                   Q(to_term__name__icontains=query_term))
             accessions = Accession.objects.filter(name__icontains=query_term)
@@ -98,7 +98,7 @@ def phenotype_list(request,format=None):
         - text/csv
         - application/json
     """
-    phenotypes = Phenotype.objects.published().all()
+    phenotypes = Phenotype.objects.all()
 
     if request.method == "GET":
         serializer = PhenotypeListSerializer(phenotypes,many=True)
@@ -125,11 +125,11 @@ def phenotype_similar_list(request,q,format=None):
     doi = _is_doi(DOI_PATTERN_PHENOTYPE,q)
     try:
         id = doi if doi else int(q)
-        phenotype = Phenotype.objects.published().get(pk=id)
+        phenotype = Phenotype.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
     to_term = phenotype.to_term.id
-    phenotypes = Phenotype.objects.published().filter(to_term__id=to_term)
+    phenotypes = Phenotype.objects.filter(to_term__id=to_term)
 
     if request.method == "GET":
         serializer = PhenotypeListSerializer(phenotypes,many=True)
@@ -165,7 +165,7 @@ def phenotype_detail(request,q,format=None):
 
     try:
         id = doi if doi else int(q)
-        phenotype = Phenotype.objects.published().get(pk=id)
+        phenotype = Phenotype.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
 
@@ -201,7 +201,7 @@ def phenotype_value(request,q,format=None):
     doi = _is_doi(DOI_PATTERN_PHENOTYPE, q)
     try:
         id = doi if doi else int(q)
-        phenotype = Phenotype.objects.published().get(pk=id)
+        phenotype = Phenotype.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
 
@@ -228,7 +228,7 @@ def study_list(request,format=None):
         - text/csv
         - application/json
     """
-    studies = Study.objects.published().all()
+    studies = Study.objects.all()
     if request.method == "GET":
         serializer = StudyListSerializer(studies,many=True)
         return Response(serializer.data)
@@ -256,7 +256,7 @@ def study_detail(request,q,format=None):
 
     try:
         id = doi if doi else int(q)
-        study = Study.objects.published().get(pk=id)
+        study = Study.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
 
@@ -286,7 +286,7 @@ def study_all_pheno(request,q=None,format=None):
     doi = _is_doi(DOI_PATTERN_STUDY, q)
     try:
         id = doi if doi else int(q)
-        study = Study.objects.published().get(pk=id)
+        study = Study.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
 
@@ -319,7 +319,7 @@ def study_phenotype_value_matrix(request,q,format=None):
     doi = _is_doi(DOI_PATTERN_STUDY, q)
     try:
         id = doi if doi else int(q)
-        study = Study.objects.published().get(pk=id)
+        study = Study.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
 
@@ -347,7 +347,7 @@ def phenotype_correlations(request,q=None):
     pheno_dict = {}
     for i,pid in enumerate(pids):
         try:
-            phenotype = Phenotype.objects.published().get(pk=pid)
+            phenotype = Phenotype.objects.get(pk=pid)
         except:
             return Response({'message':'FAILED','not_found':pid})
         pheno_acc_infos = phenotype.phenotypevalue_set.prefetch_related('obs_unit__accession')
@@ -439,7 +439,7 @@ def study_isatab(request,q,format=None):
     doi = _is_doi(DOI_PATTERN_STUDY, q)
     try:
         id = doi if doi else int(q)
-        study = Study.objects.published().get(pk=id)
+        study = Study.objects.get(pk=id)
     except:
         return HttpResponse(status=404)
 
@@ -517,7 +517,7 @@ def accession_phenotypes(request,pk,format=None):
         - text/csv
         - application/json
     """
-    phenotypes = Phenotype.objects.published().filter(phenotypevalue__obs_unit__accession_id=pk)
+    phenotypes = Phenotype.objects.filter(phenotypevalue__obs_unit__accession_id=pk)
 
     if request.method == "GET":
         serializer = PhenotypeListSerializer(phenotypes,many=True)
@@ -543,7 +543,7 @@ def accessions_phenotypes(request,format=None):
     """
     acc_phenotype_list = {}
     for id in set(request.data):
-        acc_phenotype_list[id] = Phenotype.objects.published().filter(phenotypevalue__obs_unit__accession_id=id)
+        acc_phenotype_list[id] = Phenotype.objects.filter(phenotypevalue__obs_unit__accession_id=id)
     if request.method == "POST":
         serializer = AccessionPhenotypesSerializer(acc_phenotype_list)
         return Response(serializer.data)
@@ -593,10 +593,10 @@ def submit_study(request,format=None):
                 email = EmailMessage(
                     'Study submitted to AraPheno',
                     submission.get_email_text(),
-                    'uemit.seren@gmi.oeaw.ac.at',
+                    'vkrishna@jcvi.org',
                     [submission.email],
                     [settings.ADMINS[0][1]],
-                    reply_to=['uemit.seren@gmi.oeaw.ac.at']
+                    reply_to=['vkrishna@jcvi.org']
                 )
                 email.send(True)
                 serializer = SubmissionDetailSerializer(submission,many=False,context={'request': request})
