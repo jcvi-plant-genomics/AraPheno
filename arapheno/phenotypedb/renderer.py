@@ -17,11 +17,11 @@ class PhenotypeListRenderer(CSVRenderer):
 
 class StudyListRenderer(CSVRenderer):
     header = ['name','description','phenotype_count']
-        
-        
+
+
 class PhenotypeValueRenderer(CSVRenderer):
-    header = ['phenotype_name','accession_id','accession_name','accession_cs_number','accession_longitude',
-              'accession_latitude','accession_country','phenotype_value','obs_unit_id']
+    header = ['phenotype_name','accession_id','accession_name','accession_line','accession_population',
+              'accession_country','accession_category','phenotype_value','obs_unit_id']
 
 class PhenotypeMatrixRenderer(CSVRenderer):
 
@@ -41,8 +41,8 @@ class PhenotypeMatrixRenderer(CSVRenderer):
         return headers
 
 class AccessionListRenderer(CSVRenderer):
-    header = ['pk','name','country','latitude','longitude',
-              'collector','collection_date','cs_number','species']
+    header = ['pk','name','line','population','country',
+              'category','source','status','species']
 
 
 class PLINKMatrixRenderer(PhenotypeMatrixRenderer):

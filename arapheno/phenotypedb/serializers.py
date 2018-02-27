@@ -175,17 +175,17 @@ class PhenotypeValueSerializer(serializers.ModelSerializer):
     phenotype_name = serializers.SerializerMethodField()
     accession_name = serializers.SerializerMethodField()
     accession_id = serializers.SerializerMethodField()
-    accession_cs_number = serializers.SerializerMethodField()
-    accession_longitude = serializers.SerializerMethodField()
-    accession_latitude = serializers.SerializerMethodField()
+    accession_line = serializers.SerializerMethodField()
+    accession_population = serializers.SerializerMethodField()
     accession_country = serializers.SerializerMethodField()
+    accession_category = serializers.SerializerMethodField()
     phenotype_value = serializers.SerializerMethodField()
     obs_unit_id = serializers.SerializerMethodField()
 
     class Meta:
         model = PhenotypeValue
-        fields = ('phenotype_name','accession_id','accession_name','accession_cs_number','accession_longitude',
-                  'accession_latitude','accession_country','phenotype_value','obs_unit_id')
+        fields = ('phenotype_name','accession_id','accession_name','accession_line','accession_population',
+                  'accession_country','accession_category','phenotype_value','obs_unit_id')
 
     def get_phenotype_name(self,obj):
         try:
@@ -290,7 +290,7 @@ class AccessionListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Accession
-        fields = ('pk','name','country','sitename','collector','collection_date','longitude','latitude','cs_number','species')
+        fields = ('pk','name','line','population','country','category','source','status','species')
 
 
     def get_species(self,obj):

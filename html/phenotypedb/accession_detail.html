@@ -47,48 +47,26 @@
             </div>
             <div class="row">
                 <div class="col s3">
-                    <span>Sitename:</span>
+                    <span>Line:</span>
                 </div>
                 <div class="col s9">
-                    <span>{{ object.sitename }}</span>
+                    <span>{{ object.line }}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col s3">
-                    <span>Collector:</span>
+                    <span>Population of Origin:</span>
                 </div>
                 <div class="col s9">
-                    <span>{{ object.collector }}</span>
+                    <span>{{ object.population }}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col s3">
-                    <span>Collected on:</span>
+                    <span>Seeds from:</span>
                 </div>
                 <div class="col s9">
-                    {% if object.collection_date %}
-                        <span>{{ object.collection_date }}</span>
-                    {% else %}
-                        -
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s3">
-                    <span>Lat/Lon:</span>
-                </div>
-                <div class="col s9">
-                    <span>{{ object.latitude }} / {{ object.longitude }} </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s3">
-                    <span>CS number:</span>
-                </div>
-                <div class="col s9">
-                    {% if object.cs_number_url %}
-                      <a href="{{ object.cs_number_url }}" target="_blank">{{ object.cs_number }}</a>
-                    {% endif %}
+                    <span>{{ object.source }}</span>
                 </div>
             </div>
             <div class="row">
