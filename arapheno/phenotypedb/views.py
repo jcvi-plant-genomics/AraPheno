@@ -1,5 +1,5 @@
 """
-View definitions for AraPheno
+View definitions for MedicPheno
 """
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -281,7 +281,7 @@ def upload_file(request):
             try:
                 submission = form.save()
                 email = EmailMessage(
-                    'Study submitted to AraPheno',
+                    'Study submitted to MedicPheno',
                     submission.get_email_text(),
                     'uemit.seren@gmi.oeaw.ac.at',
                     [submission.email],

@@ -254,7 +254,7 @@ class Submission(models.Model):
 
         Best
 
-        AraPheno Team
+        MedicPheno Team
         ''' % {'firstname':self.firstname, 'lastname':self.lastname,
                'study_name':self.study.name, 'submission_url':'arapheno.1001genomes.org/submission',
                'submission_id':self.id}

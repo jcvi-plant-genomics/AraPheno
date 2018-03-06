@@ -10,7 +10,7 @@ from phenotypedb.tables import PhenotypeTable, StudyTable, AccessionTable, Ontol
 from django_tables2 import RequestConfig
 
 '''
-Home View of AraPheno
+Home View of MedicPheno
 '''
 def home(request):
     search_form = GlobalSearchForm()
@@ -20,7 +20,7 @@ def home(request):
     return render(request,'home/home.html',{"search_form":search_form})
 
 '''
-About Information View of AraPheno
+About Information View of MedicPheno
 '''
 def about(request):
     return render(request,'home/about.html',{})
@@ -56,7 +56,7 @@ def faqcite(request):
     return render(request,'home/faqcite.html',{})
 
 '''
-Search Result View for Global Search in AraPheno
+Search Result View for Global Search in MedicPheno
 '''
 def SearchResults(request,query=None):
     if query==None:

@@ -591,12 +591,12 @@ def submit_study(request,format=None):
             try:
                 submission = form.save()
                 email = EmailMessage(
-                    'Study submitted to AraPheno',
+                    'Study submitted to MedicPheno',
                     submission.get_email_text(),
-                    'vkrishna@jcvi.org',
+                    'support@medicagogenome.org',
                     [submission.email],
                     [settings.ADMINS[0][1]],
-                    reply_to=['vkrishna@jcvi.org']
+                    reply_to=['support@medicagogenome.org']
                 )
                 email.send(True)
                 serializer = SubmissionDetailSerializer(submission,many=False,context={'request': request})

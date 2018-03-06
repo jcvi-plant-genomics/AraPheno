@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} AraPheno - General FAQ{% endblock title %}
+{% block title %} MedicPheno - General FAQ{% endblock title %}
 
 {% block content %}
 <div id="index-banner" class="parallax-container" style="height:130px">
@@ -18,24 +18,24 @@
                 <ul class="collection">
                 <li class="collection-item avatar">
                 <i class="material-icons circle brown">help_outline</i>
-                <span class="title black-text" style="font-size:20px">General FAQ about AraPheno</span>
+                <span class="title black-text" style="font-size:20px">General FAQ about MedicPheno</span>
                 <br><br>
                  <ul class="collapsible popout" data-collapsible="accordion">
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">star</i>What is AraPheno?</div>
-                        <div class="collapsible-body"><p>AraPheno is a central repository for population scale phenotype data for the model plant <em>Arabidopsis thaliana</em></p></div>
+                        <div class="collapsible-header"><i class="material-icons">star</i>What is MedicPheno?</div>
+                        <div class="collapsible-body"><p>MedicPheno is a central repository for population scale phenotype data for the model plant <em>Medicago truncatula</em></p></div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">star</i>Is the data in AraPheno public?</div>
-                        <div class="collapsible-body"><p>Data on AraPheno is public. Please cite the phenotype, original study of the phenotype as well as AraPheno if you use any data from this database.</p></div>
+                        <div class="collapsible-header"><i class="material-icons">star</i>Is the data in MedicPheno public?</div>
+                        <div class="collapsible-body"><p>Data on MedicPheno is public. Please cite the phenotype, original study of the phenotype as well as MedicPheno if you use any data from this database.</p></div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">star</i>Which information is stored in AraPheno?</div>
+                        <div class="collapsible-header"><i class="material-icons">star</i>Which information is stored in MedicPheno?</div>
                         <div class="collapsible-body"><p>This database contains public phenotype data from different studies.</p></div>
                     </li>
                     <li>
                         <div class="collapsible-header"><i class="material-icons">star</i>Which data formats are supported?</div>
-                        <div class="collapsible-body"><p>AraPheno supports a variety of different data formats, including CSV, JSON, PLINK and ISA-TAB format.</p></div>
+                        <div class="collapsible-body"><p>MedicPheno supports a variety of different data formats, including CSV, JSON, PLINK and ISA-TAB format.</p></div>
                     </li>
                     <li>
                         <div class="collapsible-header"><i class="material-icons">star</i>Is it possible to download the phenotype data?</div>
@@ -55,7 +55,7 @@
                         <div class="collapsible-body">
                             <p>
                                 Yes, it is possible to preserve the specific value of each replicate across multiple phenotypes.
-                                In case of PLINK just repeat the accessionid multiple times and add a an arbitary number into the replicateid column or alternatively leave it empty (it is not used by AraPheno).
+                                In case of PLINK just repeat the accessionid multiple times and add a an arbitary number into the replicateid column or alternatively leave it empty (it is not used by MedicPheno).
                                 For PLINK this should look as follows:
                             </p>
                             <pre>
@@ -69,7 +69,7 @@
                                 ...
                             </pre>
                             <p>
-                                AraPheno will create separate replicate values for each accession and make sure that for example replicate <b>1</b> of <b>6909</b> has 24.6 for <b>pheno1</b> and 100.2 for </b>pheno2</b>.<br>
+                                MedicPheno will create separate replicate values for each accession and make sure that for example replicate <b>1</b> of <b>6909</b> has 24.6 for <b>pheno1</b> and 100.2 for </b>pheno2</b>.<br>
                                 This also works for the ISA-TAB format.
                             </p>
                         </div>
